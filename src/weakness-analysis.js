@@ -1,6 +1,5 @@
 import ps from 'pokemon-showdown'
-
-import weaknessChart from './weakness-chart.js'
+import typeChart from './stats/typechart.js'
 
 const { Dex } = ps
 
@@ -51,9 +50,9 @@ function weaknessAndStrengths (types) {
   }
 
   types.forEach((type) => {
-    const typeChart = weaknessChart[type]
+    const typeMatchups = typeChart[type]
 
-    Object.entries(typeChart).forEach(([key, value]) => {
+    Object.entries(typeMatchups).forEach(([key, value]) => {
       if (value === 2) {
         tempWeaknesses.push(key)
       } else if (value === 0.5) {
@@ -94,9 +93,9 @@ function weaknessAndStrengths (types) {
   })
 
   // Calculate superEffectiveSTAB
-  Object.keys(weaknessChart).forEach((type) => {
+  Object.keys(typeChart).forEach((type) => {
     types.forEach((pokemonType) => {
-      if (weaknessChart[type][pokemonType] === 2) {
+      if (typeChart[type][pokemonType] === 2) {
         result.superEffectiveSTAB[pokemonType] = result.superEffectiveSTAB[pokemonType] || []
         result.superEffectiveSTAB[pokemonType].push(type)
       }

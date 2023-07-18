@@ -1,5 +1,5 @@
 import * as teams from './teams.js'
-import * as stats from './get-stats.js'
+import * as analysis from './weakness-analysis.js'
 
 const args = process.argv.slice(2)
 if (args.length !== 2) usage()
@@ -13,7 +13,7 @@ const secondTeam = teams.fileTeams[secondTeamName]
 if (!firstTeam) exit(`"${firstTeamName}" is not a valid team. Please try again.`)
 if (!secondTeam) exit(`"${secondTeamName}" is not a valid team. Please try again.`)
 
-stats.compareTeams(firstTeam, secondTeam)
+analysis.compareTeams(firstTeam, secondTeam)
 
 function exit(message) {
   console.error(message)
