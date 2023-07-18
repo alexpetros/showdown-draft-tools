@@ -2,11 +2,11 @@ import ps from 'pokemon-showdown'
 import * as stats from '../dex/stats.js'
 import * as spreads from '../dex/spreads.js'
 
-const { MIN_SPEED, DEFAULT_SPEED, MAX_NETURAL_SPEED, MAX_POSITIVE_SPEED } = spreads
-
-export function getFormattedTiers (mons) {
-  return getTiers(mons)
-    .map(tier => `${tier.spe}:${tier.mon}:${tier.name}`)
+export function getFormattedTiers (teams) {
+  const tiers = teams.flatMap(team => getTiers(team.mons, team.name))
+  return tiers
+    .sort((a,b) => b.spe - a.spe)
+    .map(tier => `${tier.spe}:${tier.mon}:${tier.name}:${tier.teamName}`)
     .join('\n')
 }
 
@@ -14,7 +14,7 @@ export function getFormattedTiers (mons) {
  * Get the relevant speed tiers for a team.
  * @param mons - a list of pokemon names
  */
-export function getTiers (mons) {
+export function getTiers (mons, teamName) {
   const speedTiers = mons.flatMap(mon => {
     return [
       getTier(mon, spreads.MIN_SPEED, 'Min'),
@@ -26,8 +26,7 @@ export function getTiers (mons) {
     ]
   })
 
-  speedTiers.sort((a, b) => b.spe - a.spe)
-  return speedTiers
+  return speedTiers.map(tier => ({ ...tier, teamName }))
 }
 
 function getTier (mon, set, name, modifier = 1) {
