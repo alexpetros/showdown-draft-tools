@@ -15,7 +15,7 @@ if (!secondTeam) exit(`"${secondTeamName}" is not a valid team. Please try again
 
 analysis.compareTeams(firstTeam, secondTeam)
 
-function exit(message) {
+function exit (message) {
   console.error(message)
   process.exit(1)
 }
