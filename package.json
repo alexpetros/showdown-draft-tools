@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node src/get-stats.js"
+    "start": "node src/cli.js"
   },
   "type": "module",
   "dependencies": {

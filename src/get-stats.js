@@ -1,5 +1,3 @@
-import fs from 'node:fs'
-import readline from 'node:readline'
 import ps from 'pokemon-showdown'
 
 import weaknessChart from './weakness-chart.js'
@@ -243,7 +241,7 @@ const analyzeSTABs = (team) => {
   // console.table(totalWeaknesses);
 }
 
-const compareTeams = (myTeam, theirTeam) => {
+export function compareTeams (myTeam, theirTeam) {
   myTeam = createTeamObjArr(myTeam)
   theirTeam = createTeamObjArr(theirTeam)
 
@@ -293,33 +291,3 @@ const analyzeTeam = (team1, team2, action1, action2) => {
     console.table(table)
   })
 }
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-})
-
-const teams = {}
-fs.readdirSync('./teams').forEach(teamName => {
-  const team = fs.readFileSync(`./teams/${teamName}`)
-    .toString()
-    .split('\n')
-    .filter(mon => /\S/.test(mon))
-
-  teams[teamName] = team
-})
-
-rl.question('Enter the first team name: ', (firstTeamName) => {
-  rl.question('Enter the second team name: ', (secondTeamName) => {
-    const firstTeam = teams[firstTeamName.toLowerCase()]
-    const secondTeam = teams[secondTeamName.toLowerCase()]
-
-    if (!firstTeam || !secondTeam) {
-      console.log('One or both team names are invalid. Please try again.')
-    } else {
-      compareTeams(firstTeam, secondTeam)
-    }
-
-    rl.close()
-  })
-})
