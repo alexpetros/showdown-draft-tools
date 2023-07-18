@@ -21,7 +21,7 @@ export function getTiers (mons, teamName) {
       getTier(mon, spreads.DEFAULT_SPEED, 'Default'),
       getTier(mon, spreads.MAX_NETURAL_SPEED, 'Max Neutral'),
       getTier(mon, spreads.MAX_POSITIVE_SPEED, 'Max Positive'),
-      getTier(mon, spreads.MAX_NETURAL_SPEED, 'Max Positive +1', 1.5),
+      getTier(mon, spreads.MAX_NETURAL_SPEED, 'Max Neutral +1', 1.5),
       getTier(mon, spreads.MAX_POSITIVE_SPEED, 'Max Positive +1', 1.5),
     ]
   })
