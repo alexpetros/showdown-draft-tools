@@ -1,5 +1,5 @@
 import * as teams from './teams.js'
-import * as analysis from './weakness-analysis.js'
+import * as analysis from './analysis/weakness-analysis.js'
 
 const args = process.argv.slice(2)
 if (args.length !== 2) usage()

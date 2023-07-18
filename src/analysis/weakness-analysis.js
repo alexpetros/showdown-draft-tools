@@ -1,5 +1,5 @@
 import ps from 'pokemon-showdown'
-import typeChart from './dex/typechart.js'
+import typeChart from '../dex/typechart.js'
 
 const { Dex } = ps
 
