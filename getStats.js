@@ -2,8 +2,6 @@ const fs = require('node:fs');
 const {Dex} = require('pokemon-showdown');
 const weaknessChart = require('./weaknessChart');
 const pokemon = require('pokemon-showdown/dist/sim/pokemon');
-// console.log(weaknessChart)
-// const tackle = Dex.moves.get('Tackle');
 
 const createTeamObjArr = (team) => {
     const monObjs = []
@@ -15,8 +13,6 @@ const createTeamObjArr = (team) => {
 
     return monObjs
 }
-
-// const myTeamObjArr = createTeamObjArr(myTeam)
 
 const printStats = (team, whoseTeam = 'mine', chosenStat = 'hp') => {
 
@@ -36,10 +32,6 @@ const printStats = (team, whoseTeam = 'mine', chosenStat = 'hp') => {
     // monObjs.forEach(mon => console.table(mon.baseStats))
     // console.table(mon.baseStats)
 }
-
-
-
-
 
 function weaknessAndStrengths(types) {
 
