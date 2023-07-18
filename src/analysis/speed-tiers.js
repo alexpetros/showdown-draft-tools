@@ -6,7 +6,7 @@ const { MIN_SPEED, DEFAULT_SPEED, MAX_NETURAL_SPEED, MAX_POSITIVE_SPEED } = spre
 
 export function getFormattedTiers (mons) {
   return getTiers(mons)
-    .map(tier => `${tier.spe} - ${tier.mon} (${tier.name})`)
+    .map(tier => `${tier.spe}:${tier.mon}:${tier.name}`)
     .join('\n')
 }
 
