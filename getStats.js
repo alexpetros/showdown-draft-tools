@@ -1,33 +1,13 @@
+const fs = require('node:fs');
 const {Dex} = require('pokemon-showdown');
 const weaknessChart = require('./weaknessChart');
 const pokemon = require('pokemon-showdown/dist/sim/pokemon');
 // console.log(weaknessChart)
 // const tackle = Dex.moves.get('Tackle');
 
-const kirkTeam = ['Gholdengo', 'Ting-Lu', 'Cinderace', 'Dondozo', 'Moltres-Galar', 'Basculegion-F', 'Iron Hands', 'Rillaboom', 'Hawlucha'];
-
-const morryTeam = ['Dragapult', 'Corviknight', 'Garganacl', 'Breloom', 'Volcanion', 'Sandy Shocks', 'Hoopa', 'Electrode-Hisui', 'Tinkaton'];
-
-const seanTeam = ['Dragonite', 'Landorus-Therian', 'Slowking-Galar', 'Tauros-Paldea-Aqua', 'Scream Tail', 'Forretress', 'Iron Jugulis', 'Eiscue', 'Rotom-Heat'];
-
-const masonTeam = ['Great Tusk', 'Zapdos', 'Walking Wake', 'Hatterene', 'Ceruledge', 'Zarude', 'Torkoal', 'Lycanroc-Dusk', 'Slither Wing'];
-
-const mattTeam = ['Hoopa-unbound', 'Toxapex', 'Basculegion-M', 'Thundurus-Incarnate', 'Pelipper', 'Overqwil', 'Orthworm', 'Donphan', 'Braviary-Hisui'];
-
-const kevinTeam = ['Zamazenta', 'Enamorous', 'Roaring Moon', 'Ursaluna', 'Mew', 'Talonflame', 'Alolan-Muk', 'Goodra-Hisui', 'Cloyster'];
-
-const zackTeam = ['Iron Moth', 'Meowscarada', 'Garchomp', 'Rotom-W', 'Clodsire', 'Scizor', 'Diancie', 'Blissey', 'Pawmot'];
-
-const andrewTeam = ['Kingambit', 'Baxcalibur', 'Glimmora', 'Azumarill', 'Zoroark-Hisui', 'Moltres', 'Azelf', 'Thundurus-Therian', 'Grimmsnarl'];
-
-const alexTeam = ['Iron Valiant', 'Iron Treads', 'Hydreigon', 'Greninja', 'Skeledirge', 'Slowking-Galar', 'Gengar', 'Salamence', 'Rotom-Mow'];
-
-const georgeTeam = ['Sneasler', 'Samurott-Hisui', 'Tornadus-Therian', 'Heatran', 'Enamorus-Therian', 'Amoonguss', 'Indeedee-F', 'Cresselia', 'Polteageist'];
-
-
 const createTeamObjArr = (team) => {
     const monObjs = []
-    
+
     team.forEach(mon => {
         let pokemon = Dex.species.get(mon)
         monObjs.push(pokemon)
@@ -41,16 +21,16 @@ const createTeamObjArr = (team) => {
 const printStats = (team, whoseTeam = 'mine', chosenStat = 'hp') => {
 
     const monObjs = []
-    
+
     team.forEach(mon => {
         let pokemon = Dex.species.get(mon)
         monObjs.push(pokemon)
     })
-    
+
     monObjs.sort((a, b) => {
         return b.baseStats[chosenStat] - a.baseStats[chosenStat]
     })
-    
+
     console.log(whoseTeam)
     monObjs.forEach(mon => console.log(mon.baseStats, mon.name))
     // monObjs.forEach(mon => console.table(mon.baseStats))
@@ -69,7 +49,7 @@ function weaknessAndStrengths(types) {
     let tempResistances = [];
     // 4. Make a list of all of the immunities of the pokemon's typings
     let tempImmunities = [];
-  
+
     const result = {
       weaknesses: {},
       doubleWeaknesses: {},
@@ -78,10 +58,10 @@ function weaknessAndStrengths(types) {
       immunities: {},
       superEffectiveSTAB: {},
     };
-  
+
     types.forEach((type) => {
       const typeChart = weaknessChart[type];
-  
+
       Object.entries(typeChart).forEach(([key, value]) => {
         if (value === 2) {
           tempWeaknesses.push(key);
@@ -92,15 +72,15 @@ function weaknessAndStrengths(types) {
         }
       });
     });
-  
+
     // 3. Compare the two lists, remove any element that appears in both lists
     const tempWeaknessesCopy = [...tempWeaknesses];
     tempWeaknesses = tempWeaknesses.filter(type => !tempResistances.includes(type));
     tempResistances = tempResistances.filter(type => !tempWeaknessesCopy.includes(type));
-  
+
     // 5. Remove from the weaknesses list any element that appears in the list of immunities.
     tempWeaknesses = tempWeaknesses.filter(type => !tempImmunities.includes(type));
-  
+
     // 6. Once all that is done and the lists have been properly edited, the logic for what goes in what list is this:
     tempWeaknesses.forEach(type => {
       if (tempWeaknesses.filter(x => x === type).length === 2) { // C. any type that appears twice in the weaknesses is a double resistance.
@@ -109,7 +89,7 @@ function weaknessAndStrengths(types) {
         result.weaknesses[type] = true;
       }
     });
-  
+
     tempResistances.forEach(type => {
       if (tempResistances.filter(x => x === type).length === 2) { // A. any type that appears twice in resistances is a double resistance
         result.doubleResistances[type] = true;
@@ -117,11 +97,11 @@ function weaknessAndStrengths(types) {
         result.resistances[type] = true;
       }
     });
-  
+
     tempImmunities.forEach(type => { // E. any type that appears in immunities is an immunity
       result.immunities[type] = true;
     });
-  
+
     // Calculate superEffectiveSTAB
     Object.keys(weaknessChart).forEach((type) => {
       types.forEach((pokemonType) => {
@@ -131,7 +111,7 @@ function weaknessAndStrengths(types) {
         }
       });
     });
-  
+
     result.weaknesses = Object.keys(result.weaknesses)
     result.doubleWeaknesses = Object.keys(result.doubleWeaknesses)
     result.resistances = Object.keys(result.resistances)
@@ -299,7 +279,7 @@ const analyzeTeam = (team1, team2, action1, action2) => {
           // console.log(mon.name)
             const blastedBy = findSwitchIn(mon, team2);
             const blasts = team2.filter(theirMon => findSwitchIn(theirMon, [mon]).length > 0).map(theirMon => theirMon.name);
-            
+
             // Create a mapping of type weaknesses for each Pokemon
             const weaknesses = {};
             team2.forEach(pokemon => {
@@ -311,7 +291,7 @@ const analyzeTeam = (team1, team2, action1, action2) => {
                     weaknesses[weakness].push(pokemon.name);
                 });
             });
-            
+
             const table = [{Action: 'Self', 'Pokemon': mon.name, ...mon.baseStats}].concat(
                 blastedBy.map((name, index) => {
                     const pokemon = team2.find(p => p.name === name);
@@ -336,21 +316,17 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-const teams = {
-  'kirk': kirkTeam,
-  'morry': morryTeam,
-  'sean': seanTeam,
-  'mason': masonTeam,
-  'matt': mattTeam,
-  'kevin': kevinTeam,
-  'zack': zackTeam,
-  'andrew': andrewTeam,
-  'alex': alexTeam,
-  'george': georgeTeam
-};
+const teams = {};
+fs.readdirSync('./teams').forEach(teamName => {
+  const team = fs.readFileSync(`./teams/${teamName}`)
+    .toString()
+    .split('\n')
+    .filter(mon => /\S/.test(mon))
 
+  teams[teamName] = team
+});
 
-console.log(Dex.moves.get('Stealth Rock'))
+// console.log(Dex.moves.get('Stealth Rock'))
 
 rl.question('Enter the first team name: ', (firstTeamName) => {
   rl.question('Enter the second team name: ', (secondTeamName) => {
