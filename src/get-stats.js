@@ -1,7 +1,11 @@
-const fs = require('node:fs');
-const {Dex} = require('pokemon-showdown');
-const weaknessChart = require('./weaknessChart');
-const pokemon = require('pokemon-showdown/dist/sim/pokemon');
+import fs from 'node:fs';
+import readline from 'node:readline'
+import ps from 'pokemon-showdown';
+import pokemon from 'pokemon-showdown/dist/sim/pokemon.js';
+
+const { Dex } = ps;
+
+import weaknessChart from './weakness-chart.js';
 
 const createTeamObjArr = (team) => {
     const monObjs = []
@@ -301,7 +305,6 @@ const analyzeTeam = (team1, team2, action1, action2) => {
 
 
 
-const readline = require('readline');
 
 const rl = readline.createInterface({
   input: process.stdin,

@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "start": "node src/get-stats.js"
+  },
+  "type": "module",
   "dependencies": {
     "pokemon-showdown": "^0.11.9"
   }
