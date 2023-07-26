@@ -17,7 +17,8 @@ const teamsToAnalyze = teamNames.map(teamName => {
   return { name, mons }
 })
 
-if (options.includes('--speed')) {
+// if (options.includes('--speed')) {
+if (true) {
   const allTiers = speedTiers.getFormattedTiers(teamsToAnalyze)
   console.log(allTiers)
 }
